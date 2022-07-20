@@ -1,5 +1,5 @@
 # Interactive Aquarium
-> A place where fish can be themselves!
+**A place where fish can be themselves!**
 
 ## User Stories
 ___
@@ -12,7 +12,7 @@ ___
 ### Who will use it?
 
 > People who like fish, aquariums, and would like to experience
-> the joys of raising fish without any accompanying havoc and despair.
+> the joys of raising fish without the associated havoc!
 
 ### Why is the project of interest to you?
 
@@ -37,7 +37,7 @@ If I have the time, I would love to add extra functionalities like:
 - Provide avenues to customize the tank and the background
 - Provide avenues to customize the fish
 - Have fish express their level of "contentment"
-- Have fish die if too unhappy (? maybe I don't want this ?)
+- Have fish die if too unhappy ??? maybe I don't want this ??? :(
 - Some degree of gamification where upgrades can be purchased, like an automatic feeder?
 
   
