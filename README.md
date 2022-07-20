@@ -22,22 +22,23 @@ ___
 > programming to where it feels like the fish has some semblance of reality.
 
 As a **user**, I want to be able to:
-- Add fish to a Tank
+- Add fish to a Tank with the attributes of Name, Colour, Species
 - Remove fish from a Tank
 - Feed the fish
-- Watch the fish swim around
+- Watch the fish swim around (or "view" all fish in a Tank)
 - Check the hunger levels of the fish
 
 If I have the time, I would love to add extra functionalities like:
-- Being able to chase or "pet" fish with the cursor
+- Being able to "chase" fish with the cursor
 - Providing basic animations for the fish
-- Provide some decorations to drag and drop
+- Provide some decorations to drag and drop around the tank
 - Having dirtiness accumulate + cleaning of the tank
 - Provide code for the fish to "eat" the food and swim towards it
 - Provide avenues to customize the tank and the background
 - Provide avenues to customize the fish
 - Have fish express their level of "contentment"
-- Have fish die if too unhappy ??? maybe I don't want this ??? :(
-- Some degree of gamification where upgrades can be purchased, like an automatic feeder?
+- Have fish die if too unhappy - maybe I don't want this ??? :(
+- Some degree of gamification where upgrades can be purchased, like an automatic feeder
+- Have fish interact with each other i.e. Prey fish gather in schools away from predators
 
   
