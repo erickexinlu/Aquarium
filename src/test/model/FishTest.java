@@ -3,15 +3,14 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ui.TankApp;
 
+import static model.Tank.MAX_FISH;
 import static org.junit.jupiter.api.Assertions.*;
-import static ui.TankApp.MAX_FISH;
 
 class FishTest {
     // delete or rename this class!
 
-    TankApp tankApp;
+    Tank tank;
     Fish fish1;
     Fish fish2;
 
@@ -19,7 +18,7 @@ class FishTest {
     public void setup() {
         fish1 = new Fish("Dory","blue","Blue tang");
         fish2 = new Fish("Nemo","Orange","Goldfish");
-        tankApp = new TankApp();
+        tank = new Tank();
     }
 
     @Test
@@ -51,48 +50,63 @@ class FishTest {
 
     @Test
     public void testStartTank() {
-        assertTrue(tankApp.isEmpty());
+        assertTrue(tank.isEmpty());
     }
 
     @Test
     public void testAddRemoveFish() {
-        tankApp.addFish(fish1);
-        tankApp.addFish(fish2);
-        assertEquals(tankApp.getFish(0), fish1);
-        assertEquals(tankApp.getFish(1), fish2);
-        tankApp.removeFish("Nemo");
-        assertEquals(tankApp.size(), 1);
-        assertEquals(tankApp.getFishFromName("Dory"), fish1);
+        tank.addFish(fish1);
+        tank.addFish(fish2);
+        assertEquals(tank.getFish(0), fish1);
+        assertEquals(tank.getFish(1), fish2);
+        tank.removeFish("Nemo");
+        assertEquals(tank.size(), 1);
+        assertEquals(tank.getFish(0), fish1);
+    }
+
+
+
+    @Test
+    public void testIsFullAddFull() {
+        for (int i = 0; i < MAX_FISH; i++) {
+            tank.addFish(fish1);
+        }
+        assertTrue(tank.isFull());
+        assertFalse(tank.addFish(fish2));
     }
 
     @Test
-    public void testIsFull() {
-        for (int i = 0; i < MAX_FISH; i++) {
-            tankApp.addFish(fish1);
-        }
-        assertTrue(tankApp.isFull());
+    public void testRemoveFalse() {
+        assertFalse(tank.removeFish("Dory"));
+        tank.addFish(fish1);
+        assertFalse(tank.removeFish("Nemo"));
+    }
+
+    @Test
+    public void testGetFishOutOfBounds() {
+        tank.addFish(fish1);
+        assertEquals(null, tank.getFish(1));
     }
 
     @Test
     public void testHungerAllFeedAll() {
-        tankApp.addFish(fish1);
-        tankApp.addFish(fish2);
-        tankApp.hungerAllFish();
+        tank.addFish(fish1);
+        tank.addFish(fish2);
+        tank.hungerAllFish();
         assertEquals(fish1.getHunger(), 99);
         assertEquals(fish2.getHunger(), 99);
-        tankApp.hungerAllFish();
+        tank.hungerAllFish();
         assertEquals(fish1.getHunger(), 98);
         assertEquals(fish2.getHunger(), 98);
-        tankApp.feedAllFish();
+        tank.feedAllFish();
         assertEquals(fish1.getHunger(), 100);
         assertEquals(fish2.getHunger(), 100);
     }
 
     @Test
     public void testGetSummary() {
-        assertEquals(fish1.getSummary(), "Dory is a blue Blue Tang.");
+        assertTrue(fish1.getSummary().equals("Dory is a blue Blue tang, with 100 hunger."));
     }
-
 
 
 

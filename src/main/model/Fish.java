@@ -21,18 +21,18 @@ public class Fish {
     // MODIFIES: this
     // EFFECTS: resets the fish's hunger back to 100
     public void feed() {
-
+        this.hunger = 100;
     }
 
     // MODIFIES: this
     // EFFECTS: reduces hunger by 1 when called
     public void decreaseHunger() {
-
+        this.hunger -= 1;
     }
 
     // EFFECTS: returns a String summarizing the fish's attributes
     public String getSummary() {
-        return "";
+        return name + " is a " + color + " " + species + ", with " + getHunger() + " hunger.";
     }
 
     public String getName() {
