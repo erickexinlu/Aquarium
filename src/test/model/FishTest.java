@@ -56,6 +56,7 @@ class FishTest {
     @Test
     public void testAddRemoveFish() {
         tank.addFish(fish1);
+        assertFalse(tank.isEmpty());
         tank.addFish(fish2);
         assertEquals(tank.getFish(0), fish1);
         assertEquals(tank.getFish(1), fish2);
