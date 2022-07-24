@@ -22,10 +22,10 @@ ___
 > programming to where it feels like the fish has some semblance of reality.
 
 As a **user**, I want to be able to:
-- Add fish to a Tank with the attributes of Name, Colour, Species
+- Add fish to a Tank with chosen attributes of Name, Colour, Species
 - Remove fish from a Tank
-- Feed the fish
-- Watch the fish swim around (or "view" all fish in a Tank)
+- Feed the fish to reset their hunger levels
+- Watch the fish swim around (or list all fish in a Tank at first, prior to GUI)
 - Check the hunger levels of the fish
 
 If I have the time, I would love to add extra functionalities like:
