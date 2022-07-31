@@ -27,6 +27,8 @@ As a **user**, I want to be able to:
 - Feed the fish to reset their hunger levels
 - Watch the fish swim around (or list all fish in a Tank at first, prior to GUI)
 - Check the hunger levels of the fish
+- Have the tank auto-save when I decide to quit the application
+- When starting the application, have the option to either continue with the previous tank, or start over
 
 If I have the time, I would love to add extra functionalities like:
 - Being able to "chase" fish with the cursor
