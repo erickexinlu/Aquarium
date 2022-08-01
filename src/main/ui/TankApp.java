@@ -2,19 +2,29 @@ package ui;
 
 import model.Fish;
 import model.Tank;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 // This class is composed of a tank, and manages the user interface so the user can interact
 public class TankApp {
+    // SOURCE: JsonSerializationDemo
+    private static final String JSON_PATH = "./data/tank.json";
 
     private Scanner input;
     private Tank tank;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // EFFECTS: initializes the Tank object, and does startup activities with startTank();
     public TankApp() {
         tank = new Tank();
+        //jsonWriter = new JsonWriter(JSON_PATH);
+        jsonReader = new JsonReader(JSON_PATH);
         startTank();
+
     }
 
     // MODIFIES: this
@@ -67,6 +77,7 @@ public class TankApp {
         System.out.println("Enter 'feed' to feed the fish!");
         System.out.println("Enter 'hunger' to decrease your fishes' hunger.");
         System.out.println("Enter 'status' to check up on all the fish.");
+        System.out.println("Enter 'quit' to auto-save and quit.");
     }
 
     // MODIFIES: this
@@ -142,6 +153,23 @@ public class TankApp {
     public void printSummary() {
         for (int i = 0; i < tank.size(); i++) {
             System.out.println(tank.getFish(i).getSummary());
+        }
+    }
+
+    // SOURCE: please note that the methods for persistence are based on WorkRoomApp
+    // EFFECTS: saves the current tank to file
+    public void saveTank() {
+
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads tank on file
+    public void loadTank() {
+        try {
+            tank = jsonReader.read();
+            System.out.println("Successfully loaded tank from " + JSON_PATH);
+        } catch (IOException e) {
+            System.out.println("An error occurred when reading from " + JSON_PATH);
         }
     }
 

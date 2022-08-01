@@ -1,0 +1,16 @@
+{
+    "tank": [
+      {
+        "name": "Gilbert",
+        "color": "green",
+        "species": "betta",
+        "hunger": "95"
+      },
+      {
+        "name": "Ricky",
+        "color": "blue",
+        "species": "shark",
+        "hunger": "30"
+      }
+    ]
+}

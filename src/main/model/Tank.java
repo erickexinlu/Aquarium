@@ -1,9 +1,15 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 // This class represents the tank in which all the fish are contained, as an ArrayList
-public class Tank {
+public class Tank implements Writable {
     public static final int MAX_FISH = 2;
 
     private ArrayList<Fish> tank;
@@ -46,6 +52,11 @@ public class Tank {
         }
     }
 
+    // EFFECTS: returns the list of fish in the tank
+    public List<Fish> getTank() {
+        return Collections.unmodifiableList(tank);
+    }
+
     // REQUIRES: tank is non-empty
     // MODIFIES: this
     // EFFECTS: feeds all the fish inside the tank ArrayList
@@ -80,4 +91,21 @@ public class Tank {
     }
 
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("tank", tank);
+        return json;
+    }
+
+    private JSONArray fishesToJson() {
+        // SOURCE: JsonDemo
+        JSONArray jsonFishes = new JSONArray();
+
+        for (Fish f: tank) {
+            jsonFishes.put(f.toJson());
+        }
+
+        return jsonFishes;
+    }
 }

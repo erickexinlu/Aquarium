@@ -1,7 +1,10 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // This class represents a fish's name, color, species, and their hunger which decreases over time from a max of 100
-public class Fish {
+public class Fish implements Writable {
     // delete or rename this class!
     private String name;
     private String color;
@@ -16,6 +19,14 @@ public class Fish {
         this.color = fishColor;
         this.species = fishSpecies;
         this.hunger = 100;
+    }
+
+    // EFFECTS: creates modifiable hunger for loading purposes
+    public Fish(String fishName, String fishColor, String fishSpecies, int hunger) {
+        this.name = fishName;
+        this.color = fishColor;
+        this.species = fishSpecies;
+        this.hunger = hunger;
     }
 
     // MODIFIES: this
@@ -49,5 +60,15 @@ public class Fish {
 
     public int getHunger() {
         return hunger;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("color", color);
+        json.put("species", species);
+        json.put("hunger", hunger);
+        return json;
     }
 }
