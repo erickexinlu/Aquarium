@@ -1,14 +1,6 @@
-{"tank": [
-    {
-        "color": "orange",
-        "species": "koi",
-        "name": "Gilbert",
-        "hunger": 96
-    },
-    {
-        "color": "biblical",
-        "species": "figure",
-        "name": "David",
-        "hunger": 96
-    }
-]}
+{"tank": [{
+    "color": "d",
+    "species": "d",
+    "name": "Jordan",
+    "hunger": 99
+}]}

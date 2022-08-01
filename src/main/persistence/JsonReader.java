@@ -41,6 +41,7 @@ public class JsonReader {
         return converter.toString();
     }
 
+    // EFFECTS: converts the JSON file into a usable tank Object and returns it
     private Tank parseTank(JSONObject jsonObject) {
         Tank t = new Tank();
         addFishes(t, jsonObject);

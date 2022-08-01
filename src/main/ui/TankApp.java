@@ -204,8 +204,9 @@ public class TankApp {
     // EFFECTS: returns true if there are fish in the save file to load from
     public boolean checkAutoLoad() {
         try {
-            tank = jsonReader.read();
-            return !tank.isEmpty();
+            Tank tempTank = new Tank();
+            tempTank = jsonReader.read();
+            return !tempTank.isEmpty();
         } catch (IOException e) {
             System.out.println("An error occurred while checking auto save file");
         }

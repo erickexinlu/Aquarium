@@ -63,6 +63,7 @@ public class Fish implements Writable {
     }
 
     @Override
+    // EFFECTS: converts the Fish into a JSONObject and returns it
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("name", name);

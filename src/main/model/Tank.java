@@ -91,6 +91,7 @@ public class Tank implements Writable {
     }
 
 
+    // EFFECTS: converts the tank into a JSONObject
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -98,6 +99,7 @@ public class Tank implements Writable {
         return json;
     }
 
+    // EFFECTS: converts all the fish in the tank list into a JSONArray and returns it
     private JSONArray fishesToJson() {
         // SOURCE: JsonDemo
         JSONArray jsonFishes = new JSONArray();
