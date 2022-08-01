@@ -5,6 +5,7 @@ import model.Tank;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -21,7 +22,7 @@ public class TankApp {
     // EFFECTS: initializes the Tank object, and does startup activities with startTank();
     public TankApp() {
         tank = new Tank();
-        //jsonWriter = new JsonWriter(JSON_PATH);
+        jsonWriter = new JsonWriter(JSON_PATH);
         jsonReader = new JsonReader(JSON_PATH);
         startTank();
 
@@ -35,6 +36,8 @@ public class TankApp {
 
         input = new Scanner(System.in);
 
+        doLoad();
+
         while (!stop) {
             // SOURCE: please note that code taking input from the Scanner is modelled after TellerApp
 
@@ -44,6 +47,7 @@ public class TankApp {
 
             if (userInput.equals("quit")) {
                 stop = true;
+                saveTank();
             } else {
                 parseCommand(userInput);
             }
@@ -78,6 +82,24 @@ public class TankApp {
         System.out.println("Enter 'hunger' to decrease your fishes' hunger.");
         System.out.println("Enter 'status' to check up on all the fish.");
         System.out.println("Enter 'quit' to auto-save and quit.");
+    }
+
+    // MODIFIES: this
+    // EFFECTS: handles loading based on user input on startup
+    private void doLoad() {
+        if (checkAutoLoad()) {
+            String userInput;
+            System.out.println("We detected a previously saved tank. Would you like to load?");
+            System.out.println("[Y/N]");
+            userInput = input.nextLine();
+            userInput = userInput.toLowerCase();
+
+            if (userInput.equals("y")) {
+                loadTank();
+            } else {
+                System.out.println("A fresh new tank has been prepared for you!");
+            }
+        }
     }
 
     // MODIFIES: this
@@ -159,7 +181,13 @@ public class TankApp {
     // SOURCE: please note that the methods for persistence are based on WorkRoomApp
     // EFFECTS: saves the current tank to file
     public void saveTank() {
-
+        try {
+            jsonWriter.open();
+            jsonWriter.write(tank);
+            jsonWriter.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred writing to the filepath at " + JSON_PATH);
+        }
     }
 
     // MODIFIES: this
@@ -167,10 +195,21 @@ public class TankApp {
     public void loadTank() {
         try {
             tank = jsonReader.read();
-            System.out.println("Successfully loaded tank from " + JSON_PATH);
+            System.out.println("Successfully loaded tank from " + JSON_PATH + "! Welcome back!");
         } catch (IOException e) {
             System.out.println("An error occurred when reading from " + JSON_PATH);
         }
+    }
+
+    // EFFECTS: returns true if there are fish in the save file to load from
+    public boolean checkAutoLoad() {
+        try {
+            tank = jsonReader.read();
+            return !tank.isEmpty();
+        } catch (IOException e) {
+            System.out.println("An error occurred while checking auto save file");
+        }
+        return false;
     }
 
 

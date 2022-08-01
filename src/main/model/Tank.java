@@ -34,7 +34,7 @@ public class Tank implements Writable {
     // EFFECTS: attempts to remove the Fish with the corresponding given fishName, if succeeds returns true, else false
     public boolean removeFish(String fishName) {
         for (Fish fish: tank) {
-            if (fishName.equals(fish.getName())) {
+            if (fishName.equalsIgnoreCase(fish.getName())) {
                 tank.remove(fish);
                 return true;
             }
@@ -94,7 +94,7 @@ public class Tank implements Writable {
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
-        json.put("tank", tank);
+        json.put("tank", fishesToJson());
         return json;
     }
 

@@ -63,7 +63,7 @@ public class JsonReader {
         String name = jsonObject.getString("name");
         String color = jsonObject.getString("color");
         String species = jsonObject.getString("species");
-        int hunger = Integer.parseInt(jsonObject.getString("hunger"));
+        int hunger = jsonObject.getInt("hunger");
         Fish fish = new Fish(name, color, species, hunger);
         t.addFish(fish);
     }
