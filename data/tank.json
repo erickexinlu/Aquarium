@@ -1,6 +1,6 @@
 {"tank": [{
-    "color": "d",
-    "species": "d",
-    "name": "Jordan",
-    "hunger": 99
+    "color": "test",
+    "species": "test",
+    "name": "testy",
+    "hunger": 100
 }]}

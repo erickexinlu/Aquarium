@@ -11,6 +11,8 @@ import java.util.List;
 // This class represents the tank in which all the fish are contained, as an ArrayList
 public class Tank implements Writable {
     public static final int MAX_FISH = 2;
+    public static final int TANK_WIDTH = 600;
+    public static final int TANK_HEIGHT = 400;
 
     private ArrayList<Fish> tank;
 
