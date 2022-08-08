@@ -1,6 +1,14 @@
-{"tank": [{
-    "color": "test",
-    "species": "test",
-    "name": "testy",
-    "hunger": 100
-}]}
+{"tank": [
+    {
+        "color": "test",
+        "species": "test",
+        "name": "testy",
+        "hunger": 100
+    },
+    {
+        "color": "poo",
+        "species": "poop",
+        "name": "poo",
+        "hunger": 100
+    }
+]}

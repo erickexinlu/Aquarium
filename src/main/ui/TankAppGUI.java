@@ -46,8 +46,28 @@ public class TankAppGUI extends JFrame {
         jsonWriter = new JsonWriter(JSON_PATH);
         jsonReader = new JsonReader(JSON_PATH);
 
+        attemptAutoLoad();
+
+
         this.centreOnScreen();
         this.setVisible(true);
+    }
+
+    private void attemptAutoLoad() {
+        if (checkAutoLoad()) {
+            int save = 0;
+            save = JOptionPane.showConfirmDialog(null,
+                    "We detected a previously saved tank. Would you like to load?",
+                    "Load previous save?",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE);
+            if (save == JOptionPane.OK_OPTION) {
+                loadTank();
+            } else {
+                JOptionPane.showMessageDialog(null,
+                        "A new tank has been prepared for you!");
+            }
+        }
     }
 
 
@@ -57,7 +77,6 @@ public class TankAppGUI extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
         this.setResizable(false);
-        //handle saving Listener event later
     }
 
     private void startPanel() {
@@ -73,6 +92,7 @@ public class TankAppGUI extends JFrame {
         JButton feedFishButton = new JButton(new FeedFishAction());
         JButton statusFishButton = new JButton(new StatusFishAction());
         JButton saveFishButton = new JButton(new SaveFishAction());
+
         menuArea.add(addFishButton);
         menuArea.add(removeFishButton);
         menuArea.add(feedFishButton);
@@ -83,7 +103,6 @@ public class TankAppGUI extends JFrame {
     }
 
 
-
     private class AddFishAction extends AbstractAction {
         AddFishAction() {
             super("Add Fish");
@@ -91,16 +110,21 @@ public class TankAppGUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent event) {
-            fishNameField = new JTextField();
-            fishColorField = new JTextField();
-            fishSpeciesField = new JTextField();
-            Object[] fishParams = {"Name", fishNameField,
-                                   "Color", fishColorField,
-                                   "Species", fishSpeciesField};
-            int ok = JOptionPane.showConfirmDialog(null, fishParams, "Fish Details",
-                    JOptionPane.OK_CANCEL_OPTION);
-            if (ok == (JOptionPane.OK_OPTION)) {
-                tank.addFish(new Fish(fishNameField.getText(), fishColorField.getText(), fishSpeciesField.getText()));
+            if (tank.isFull()) {
+                JOptionPane.showMessageDialog(null, "The tank is at capacity!");
+            } else {
+                fishNameField = new JTextField();
+                fishColorField = new JTextField();
+                fishSpeciesField = new JTextField();
+                Object[] fishParams = {"Name", fishNameField,
+                        "Color", fishColorField,
+                        "Species", fishSpeciesField};
+                int ok = JOptionPane.showConfirmDialog(null, fishParams, "Fish Details",
+                        JOptionPane.OK_CANCEL_OPTION);
+                if (ok == (JOptionPane.OK_OPTION)) {
+                    tank.addFish(new Fish(fishNameField.getText(), fishColorField.getText(),
+                            fishSpeciesField.getText()));
+                }
             }
         }
     }
@@ -133,7 +157,7 @@ public class TankAppGUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             tank.feedAllFish();
-            JOptionPane.showMessageDialog(null,"Yum!");
+            JOptionPane.showMessageDialog(null, "Yum!");
         }
     }
 
@@ -174,6 +198,9 @@ public class TankAppGUI extends JFrame {
             printString = printString.concat(tank.getFish(i).getSummary());
             printString = printString.concat("\n");
         }
+        if (tank.isEmpty()) {
+            printString = "The tank is currently empty.";
+        }
         return printString;
     }
 
@@ -184,7 +211,7 @@ public class TankAppGUI extends JFrame {
             jsonWriter.open();
             jsonWriter.write(tank);
             jsonWriter.close();
-            JOptionPane.showMessageDialog(null,"Successfully saved!");
+            JOptionPane.showMessageDialog(null, "Successfully saved!");
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null,
                     "An error occurred writing to the filepath at " + JSON_PATH);
@@ -357,12 +384,6 @@ public class TankAppGUI extends JFrame {
 //            printSummary();
 //        }
 //    }
-
-
-
-
-
-
 
 
 }
