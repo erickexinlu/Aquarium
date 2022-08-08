@@ -3,7 +3,6 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
-import java.awt.*;
 import java.util.Random;
 
 
@@ -20,7 +19,7 @@ import java.util.Random;
 
 // This class represents a fish's name, color, species, position, and hunger
 public class Fish implements Writable {
-    public static final int DIAMETER = 25;
+    public static final int DIAMETER = 26;
     public static final Random random = new Random();
 
 
@@ -46,13 +45,25 @@ public class Fish implements Writable {
         this.initializePos();
     }
 
+    // EFFECTS: creates fixed speed/position fish for testing purposes
+    public Fish(int posX, int posY, int deltaX, int deltaY) {
+        this.name = "";
+        this.color = "";
+        this.species = "";
+        this.hunger = 100;
+
+        this.posX = posX;
+        this.posY = posY;
+        this.speedX = deltaX;
+        this.speedY = deltaY;
+    }
+
     // EFFECTS: creates modifiable hunger for loading purposes
     public Fish(String fishName, String fishColor, String fishSpecies, int hunger) {
         this.name = fishName;
         this.color = fishColor;
         this.species = fishSpecies;
         this.hunger = hunger;
-
         this.initializePos();
     }
 

@@ -52,7 +52,12 @@ public class Tank implements Writable {
     // EFFECTS: advances all the fish in the tank and decrements their hunger
     public void update() {
         moveFishes();
-        hungerAllFish();
+        ticksSoFar++;
+        if (ticksSoFar >= TICKS_PER_HUNGER) {
+            hungerAllFish();
+            ticksSoFar = 0;
+        }
+
     }
 
     // MODIFIES: this
@@ -67,7 +72,7 @@ public class Tank implements Writable {
     // MODIFIES: this
     // EFFECTS: attempts to remove the Fish with the corresponding given fishName, if succeeds returns true, else false
     public boolean removeFish(String fishName) {
-        for (Fish fish: tank) {
+        for (Fish fish : tank) {
             if (fishName.equalsIgnoreCase(fish.getName())) {
                 tank.remove(fish);
                 return true;
@@ -95,7 +100,7 @@ public class Tank implements Writable {
     // MODIFIES: this
     // EFFECTS: feeds all the fish inside the tank ArrayList
     public void feedAllFish() {
-        for (Fish fish: tank) {
+        for (Fish fish : tank) {
             fish.feed();
         }
     }
@@ -103,14 +108,11 @@ public class Tank implements Writable {
     // MODIFIES: this
     // EFFECTS: after enough ticks are reached, each fish's hunger is reduced by 1
     public void hungerAllFish() {
-        ticksSoFar++;
-        if (ticksSoFar >= TICKS_PER_HUNGER) {
-            for (Fish fish : tank) {
-                fish.decreaseHunger();
-            }
-            ticksSoFar = 0;
+        for (Fish fish : tank) {
+            fish.decreaseHunger();
         }
     }
+
 
     // EFFECTS: returns the number of fish in the tank
     public int size() {
@@ -141,7 +143,7 @@ public class Tank implements Writable {
         // SOURCE: JsonDemo
         JSONArray jsonFishes = new JSONArray();
 
-        for (Fish f: tank) {
+        for (Fish f : tank) {
             jsonFishes.put(f.toJson());
         }
 
