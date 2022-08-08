@@ -3,13 +3,23 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
+import java.awt.*;
+
 // This class represents a fish's name, color, species, and their hunger which decreases over time from a max of 100
 public class Fish implements Writable {
     // delete or rename this class!
+    public static final int DIAMETER = 25;
+
+
     private String name;
     private String color;
     private String species;
     private int hunger;
+
+    private int posX;
+    private int posY;
+    private int speedX;
+    private int speedY;
 
     // REQUIRES: fishName, fishColor, fishSpecies are non-zero length
     // EFFECTS: name is set to fishName, color is set to fishColor, species is set to fishSpecies,
@@ -19,6 +29,12 @@ public class Fish implements Writable {
         this.color = fishColor;
         this.species = fishSpecies;
         this.hunger = 100;
+
+        // can encapsulate this RNG later
+        this.posX = 300;
+        this.posY = 300;
+        this.speedX = 5;
+        this.speedY = 5;
     }
 
     // EFFECTS: creates modifiable hunger for loading purposes
@@ -27,6 +43,11 @@ public class Fish implements Writable {
         this.color = fishColor;
         this.species = fishSpecies;
         this.hunger = hunger;
+
+        this.posX = 300;
+        this.posY = 300;
+        this.speedX = 1;
+        this.speedY = 1;
     }
 
     // MODIFIES: this
@@ -71,5 +92,41 @@ public class Fish implements Writable {
         json.put("species", species);
         json.put("hunger", hunger);
         return json;
+    }
+
+    public void move() {
+        posX += speedX;
+        posY += speedY;
+
+        handleBoundaries();
+    }
+
+    private void handleBoundaries() {
+        int radius = DIAMETER / 2;
+        if (posX - radius < 0) {
+            // handle left edge
+            posX = radius;
+            speedX *= -1;
+        } else if (posX + DIAMETER / 2 > Tank.TANK_WIDTH) {
+            // handle right edge
+            posX = Tank.TANK_WIDTH - radius;
+            speedX *= -1;
+        } else if (posY - radius < 0) {
+            // handle top edge
+            posY = radius;
+            speedY *= -1;
+        } else if (posY + radius > Tank.TANK_HEIGHT) {
+            // handle bottom edge
+            posY = Tank.TANK_HEIGHT - radius;
+            speedY *= -1;
+        }
+    }
+
+    public int getPosX() {
+        return posX;
+    }
+
+    public int getPosY() {
+        return posY;
     }
 }

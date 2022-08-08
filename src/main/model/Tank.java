@@ -13,12 +13,16 @@ public class Tank implements Writable {
     public static final int MAX_FISH = 2;
     public static final int TANK_WIDTH = 600;
     public static final int TANK_HEIGHT = 400;
+    public static final int TICKS_PER_HUNGER = 80;
+
+    private static int ticksSoFar;
 
     private ArrayList<Fish> tank;
 
     // EFFECTS: initializes the ArrayList as an empty list
     public Tank() {
         tank = new ArrayList<>();
+        ticksSoFar = 0;
     }
 
     // MODIFIES: this
@@ -31,6 +35,18 @@ public class Tank implements Writable {
             return true;
         }
     }
+
+    public void update() {
+        moveFishes();
+        hungerAllFish();
+    }
+
+    private void moveFishes() {
+        for (Fish f : tank) {
+            f.move();
+        }
+    }
+
 
     // MODIFIES: this
     // EFFECTS: attempts to remove the Fish with the corresponding given fishName, if succeeds returns true, else false
@@ -72,8 +88,12 @@ public class Tank implements Writable {
     // MODIFIES: this
     // EFFECTS: reduces the hunger values of all fish in the tank by 1
     public void hungerAllFish() {
-        for (Fish fish: tank) {
-            fish.decreaseHunger();
+        ticksSoFar++;
+        if (ticksSoFar >= TICKS_PER_HUNGER) {
+            for (Fish fish : tank) {
+                fish.decreaseHunger();
+            }
+            ticksSoFar = 0;
         }
     }
 

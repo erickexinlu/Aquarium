@@ -9,6 +9,7 @@ import persistence.JsonWriter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,7 +27,6 @@ public class TankAppGUI extends JFrame {
     private static final String JSON_PATH = "./data/tank.json";
     private TankPanel tankPanel;
     private JPanel menuArea;
-    private Scanner input;
     private Tank tank;
 
     JTextField fishNameField;
@@ -41,21 +41,33 @@ public class TankAppGUI extends JFrame {
         startFrame();
 
         tank = new Tank();
-        startPanel();
-        startButtons();
+        startTankPanel();
+        startMenuPanel();
         jsonWriter = new JsonWriter(JSON_PATH);
         jsonReader = new JsonReader(JSON_PATH);
 
         attemptAutoLoad();
 
-
+        this.pack();
         this.centreOnScreen();
         this.setVisible(true);
+        addTimer();
+    }
+
+    private void addTimer() {
+        Timer t = new Timer(INTERVAL, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                tankPanel.repaint();
+                tank.update();
+            }
+        });
+        t.start();
     }
 
     private void attemptAutoLoad() {
         if (checkAutoLoad()) {
-            int save = 0;
+            int save;
             save = JOptionPane.showConfirmDialog(null,
                     "We detected a previously saved tank. Would you like to load?",
                     "Load previous save?",
@@ -79,12 +91,12 @@ public class TankAppGUI extends JFrame {
         this.setResizable(false);
     }
 
-    private void startPanel() {
+    private void startTankPanel() {
         tankPanel = new TankPanel(tank);
         this.add(tankPanel, BorderLayout.WEST);
     }
 
-    private void startButtons() {
+    private void startMenuPanel() {
         JPanel menuArea = new JPanel();
         menuArea.setLayout(new GridLayout(0, 1, 0, 25));
         JButton addFishButton = new JButton(new AddFishAction());
