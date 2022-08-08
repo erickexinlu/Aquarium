@@ -38,20 +38,25 @@ public class TankAppGUI extends JFrame {
 
     // EFFECTS: initializes the Tank object, and does startup activities with startTank();
     public TankAppGUI() {
+        jsonWriter = new JsonWriter(JSON_PATH);
+        jsonReader = new JsonReader(JSON_PATH);
         startFrame();
 
         tank = new Tank();
+        attemptAutoLoad();
         startTankPanel();
         startMenuPanel();
-        jsonWriter = new JsonWriter(JSON_PATH);
-        jsonReader = new JsonReader(JSON_PATH);
 
-        attemptAutoLoad();
+
+
 
         this.pack();
         this.centreOnScreen();
-        this.setVisible(true);
+
+        tankPanel.repaint();
+
         addTimer();
+        this.setVisible(true);
     }
 
     private void addTimer() {

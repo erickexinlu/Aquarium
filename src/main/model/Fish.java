@@ -4,11 +4,13 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import java.awt.*;
+import java.util.Random;
 
 // This class represents a fish's name, color, species, and their hunger which decreases over time from a max of 100
 public class Fish implements Writable {
     // delete or rename this class!
     public static final int DIAMETER = 25;
+    public static final Random random = new Random();
 
 
     private String name;
@@ -30,11 +32,7 @@ public class Fish implements Writable {
         this.species = fishSpecies;
         this.hunger = 100;
 
-        // can encapsulate this RNG later
-        this.posX = 300;
-        this.posY = 300;
-        this.speedX = 5;
-        this.speedY = 5;
+        this.initializePos();
     }
 
     // EFFECTS: creates modifiable hunger for loading purposes
@@ -44,10 +42,14 @@ public class Fish implements Writable {
         this.species = fishSpecies;
         this.hunger = hunger;
 
-        this.posX = 300;
-        this.posY = 300;
-        this.speedX = 1;
-        this.speedY = 1;
+        this.initializePos();
+    }
+
+    private void initializePos() {
+        this.posX = random.nextInt(Tank.TANK_WIDTH);
+        this.posY = random.nextInt(Tank.TANK_HEIGHT);
+        this.speedX = random.nextInt(4);
+        this.speedY = random.nextInt(4);
     }
 
     // MODIFIES: this
