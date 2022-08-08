@@ -6,9 +6,20 @@ import persistence.Writable;
 import java.awt.*;
 import java.util.Random;
 
-// This class represents a fish's name, color, species, and their hunger which decreases over time from a max of 100
+
+// SOURCE: JsonSerializationDemo
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
+// SOURCE: PaddleBallFrame from lab3 (cloned from VCS)
+// https://github.students.cs.ubc.ca/CPSC210-2022S-T2/lab3_m6g6q/commit/8b37f9b6e072a28e6e962ec68cd148c6e767ec12
+
+// SOURCE: SpaceInvadersStarter (download from edX)
+// https://edge.edx.org/assets/courseware/v1/13595daba554c85e2fe669e686cbff91/
+// asset-v1:UBC+CPSC210+all+type@asset+block/SpaceInvadersStarter.zip
+
+
+// This class represents a fish's name, color, species, position, and hunger
 public class Fish implements Writable {
-    // delete or rename this class!
     public static final int DIAMETER = 25;
     public static final Random random = new Random();
 
@@ -45,6 +56,8 @@ public class Fish implements Writable {
         this.initializePos();
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes the position and speed for the fish randomly
     private void initializePos() {
         this.posX = random.nextInt(Tank.TANK_WIDTH);
         this.posY = random.nextInt(Tank.TANK_HEIGHT);
@@ -96,6 +109,8 @@ public class Fish implements Writable {
         return json;
     }
 
+    // MODIFIES: this
+    // EFFECTS: advances the position of the fish, and checks to see if it's out of bounds
     public void move() {
         posX += speedX;
         posY += speedY;
@@ -103,6 +118,8 @@ public class Fish implements Writable {
         handleBoundaries();
     }
 
+    // MODIFIES: this
+    // EFFECTS: if the fish is out of bounds, it returns it to the right position and changes speed
     private void handleBoundaries() {
         int radius = DIAMETER / 2;
         if (posX - radius < 0) {

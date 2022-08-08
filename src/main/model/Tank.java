@@ -8,6 +8,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+// This class is composed of a tank, and manages all GUI interactions
+// SOURCE: JsonSerializationDemo
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
+// SOURCE: PaddleBallFrame from lab3 (cloned from VCS)
+// https://github.students.cs.ubc.ca/CPSC210-2022S-T2/lab3_m6g6q/commit/8b37f9b6e072a28e6e962ec68cd148c6e767ec12
+
+// SOURCE: SpaceInvadersStarter (download from edX)
+// https://edge.edx.org/assets/courseware/v1/13595daba554c85e2fe669e686cbff91/
+// asset-v1:UBC+CPSC210+all+type@asset+block/SpaceInvadersStarter.zip
+
+
 // This class represents the tank in which all the fish are contained, as an ArrayList
 public class Tank implements Writable {
     public static final int MAX_FISH = 2;
@@ -36,11 +48,15 @@ public class Tank implements Writable {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: advances all the fish in the tank and decrements their hunger
     public void update() {
         moveFishes();
         hungerAllFish();
     }
 
+    // MODIFIES: this
+    // EFFECTS: moves each fish in the tank
     private void moveFishes() {
         for (Fish f : tank) {
             f.move();
@@ -84,9 +100,8 @@ public class Tank implements Writable {
         }
     }
 
-    // REQUIRES: tank is non-empty
     // MODIFIES: this
-    // EFFECTS: reduces the hunger values of all fish in the tank by 1
+    // EFFECTS: after enough ticks are reached, each fish's hunger is reduced by 1
     public void hungerAllFish() {
         ticksSoFar++;
         if (ticksSoFar >= TICKS_PER_HUNGER) {

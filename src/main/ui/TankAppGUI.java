@@ -15,9 +15,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-// This class is composed of a tank, and manages the user interface so the user can interact
+
 // SOURCE: JsonSerializationDemo
-// SOURCE: PaddleBallFrame from lab3
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
+// SOURCE: PaddleBallFrame from lab3 (cloned from VCS)
+// https://github.students.cs.ubc.ca/CPSC210-2022S-T2/lab3_m6g6q/commit/8b37f9b6e072a28e6e962ec68cd148c6e767ec12
+
+// SOURCE: SpaceInvadersStarter (download from edX)
+// https://edge.edx.org/assets/courseware/v1/13595daba554c85e2fe669e686cbff91/
+// asset-v1:UBC+CPSC210+all+type@asset+block/SpaceInvadersStarter.zip
+
+
+// This class manages all GUI interactions for the rest of the classes
 public class TankAppGUI extends JFrame {
     private static final int INTERVAL = 40;
     private static final int WIDTH = 750;
@@ -36,7 +46,7 @@ public class TankAppGUI extends JFrame {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
-    // EFFECTS: initializes the Tank object, and does startup activities with startTank();
+    // EFFECTS: initializes all necessary objects and delegates Swing tasks
     public TankAppGUI() {
         jsonWriter = new JsonWriter(JSON_PATH);
         jsonReader = new JsonReader(JSON_PATH);
@@ -46,19 +56,14 @@ public class TankAppGUI extends JFrame {
         attemptAutoLoad();
         startTankPanel();
         startMenuPanel();
-
-
-
-
         this.pack();
         this.centreOnScreen();
-
-        tankPanel.repaint();
-
         addTimer();
         this.setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: starts a timer that constantly updates the tank and draws it onto the GUI
     private void addTimer() {
         Timer t = new Timer(INTERVAL, new ActionListener() {
             @Override
@@ -70,6 +75,8 @@ public class TankAppGUI extends JFrame {
         t.start();
     }
 
+    // MODIFIES: this
+    // EFFECTS: checks to see if the tank is non-empty, to see if the user wants to load that data
     private void attemptAutoLoad() {
         if (checkAutoLoad()) {
             int save;
@@ -88,6 +95,8 @@ public class TankAppGUI extends JFrame {
     }
 
 
+    // MODIFIES: this
+    // EFFECTS: makes the initial window where everything else is housed
     private void startFrame() {
         this.setTitle("Your fish tank!");
         this.setSize(WIDTH, HEIGHT);
@@ -96,11 +105,15 @@ public class TankAppGUI extends JFrame {
         this.setResizable(false);
     }
 
+    // MODIFIES: this, tankPanel
+    // EFFECTS: initializes the tankPanel and places it on the left
     private void startTankPanel() {
         tankPanel = new TankPanel(tank);
         this.add(tankPanel, BorderLayout.WEST);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes the menu panel and places it on the right
     private void startMenuPanel() {
         JPanel menuArea = new JPanel();
         menuArea.setLayout(new GridLayout(0, 1, 0, 25));
@@ -120,6 +133,8 @@ public class TankAppGUI extends JFrame {
     }
 
 
+    // MODIFIES: this
+    // EFFECTS: handles user input for adding fish
     private class AddFishAction extends AbstractAction {
         AddFishAction() {
             super("Add Fish");
@@ -146,6 +161,8 @@ public class TankAppGUI extends JFrame {
         }
     }
 
+    // MODIFIES: this, tank
+    // EFFECTS: handles user input for removing fish
     private class RemoveFishAction extends AbstractAction {
         RemoveFishAction() {
             super("Remove Fish");
@@ -153,19 +170,25 @@ public class TankAppGUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent event) {
-            String nameToRemove = JOptionPane.showInputDialog(null,
-                    printSummary() + "What is the name of the fish you would like to remove?");
-            if (tank.removeFish(nameToRemove)) {
-                JOptionPane.showMessageDialog(null,
-                        nameToRemove + " has gone to fish heaven! Bye "
-                                + nameToRemove + "!");
+            if (tank.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "The tank is currently empty!");
             } else {
-                JOptionPane.showMessageDialog(null,
-                        "That fish could not be found! Please try again.");
+                String nameToRemove = JOptionPane.showInputDialog(null,
+                        printSummary() + "What is the name of the fish you would like to remove?");
+                if (tank.removeFish(nameToRemove)) {
+                    JOptionPane.showMessageDialog(null,
+                            nameToRemove + " has gone to fish heaven! Bye "
+                                    + nameToRemove + "!");
+                } else {
+                    JOptionPane.showMessageDialog(null,
+                            "That fish could not be found! Please try again.");
+                }
             }
         }
     }
 
+    // MODIFIES: this, tank
+    // EFFECTS: feeds all the fish and displays it to the GUI
     private class FeedFishAction extends AbstractAction {
         public FeedFishAction() {
             super("Feed Fish");
@@ -178,6 +201,7 @@ public class TankAppGUI extends JFrame {
         }
     }
 
+    // EFFECTS: Displays the status of the fish in the tank
     private class StatusFishAction extends AbstractAction {
         public StatusFishAction() {
             super("Fish Status");
@@ -189,6 +213,7 @@ public class TankAppGUI extends JFrame {
         }
     }
 
+    // EFFECTS: saves fish to the json file
     private class SaveFishAction extends AbstractAction {
         public SaveFishAction() {
             super("Save Fish");
@@ -200,6 +225,7 @@ public class TankAppGUI extends JFrame {
         }
     }
 
+    // EFFECTS: centers the JFrame in the middle of the user's screen
     private void centreOnScreen() {
         int width = Toolkit.getDefaultToolkit().getScreenSize().width;
         int height = Toolkit.getDefaultToolkit().getScreenSize().height;
@@ -257,150 +283,4 @@ public class TankAppGUI extends JFrame {
         }
         return false;
     }
-
-
-//    // MODIFIES: this
-//    // EFFECTS: opens the Scanner, initializes the tank ArrayList, and handles input until program is terminated
-//    private void startTank() {
-//        String userInput;
-//        boolean stop = false;
-//
-//        input = new Scanner(System.in);
-//
-//        doLoad();
-//
-//        while (!stop) {
-//            // SOURCE: please note that code taking input from the Scanner is modelled after TellerApp
-//
-//            printInstructions();
-//            userInput = input.nextLine();
-//            userInput = userInput.toLowerCase();
-//
-//            if (userInput.equals("quit")) {
-//                stop = true;
-//                saveTank();
-//            } else {
-//                parseCommand(userInput);
-//            }
-//        }
-//    }
-
-//    // MODIFIES: this
-//    // EFFECTS: calls the appropriate method based on the user command
-//    private void parseCommand(String command) {
-//        // SOURCE: this is modelled after TellerApp
-//        if (command.equals("add")) {
-//            doAdd();
-//        } else if (command.equals("remove")) {
-//            doRemoval();
-//        } else if (command.equals("feed")) {
-//            doFeed();
-//        } else if (command.equals("hunger")) {
-//            doHunger();
-//        } else if (command.equals("status")) {
-//            doStatus();
-//        } else {
-//            System.out.println("Your command was not accepted.");
-//        }
-//    }
-
-//    // EFFECTS: prints out user instructions for interacting with the program
-//    private void printInstructions() {
-//        System.out.println("__________________________________");
-//        System.out.println("Enter 'add' to add a new fish.");
-//        System.out.println("Enter 'remove' to remove a fish.");
-//        System.out.println("Enter 'feed' to feed the fish!");
-//        System.out.println("Enter 'hunger' to decrease your fishes' hunger.");
-//        System.out.println("Enter 'status' to check up on all the fish.");
-//        System.out.println("Enter 'quit' to auto-save and quit.");
-//    }
-
-//    // MODIFIES: this
-//    // EFFECTS: handles loading based on user input on startup
-//    private void doLoad() {
-//        if (checkAutoLoad()) {
-//            String userInput;
-//            System.out.println("We detected a previously saved tank. Would you like to load?");
-//            System.out.println("[Y/N]");
-//            userInput = input.nextLine();
-//            userInput = userInput.toLowerCase();
-//
-//            if (userInput.equals("y")) {
-//                loadTank();
-//            } else {
-//                System.out.println("A fresh new tank has been prepared for you!");
-//            }
-//        }
-//    }
-//
-//    // MODIFIES: this
-//    // EFFECTS: adds a fish with user input to the tank
-//    private void doAdd() {
-//        if (tank.isFull()) {
-//            System.out.println("Sorry - the tank is at capacity!");
-//        } else {
-//            System.out.println("Wonderful! What would you like to name your fish?");
-//            String name = input.nextLine();
-//
-//            System.out.println("What colour are they?");
-//            String color = input.nextLine();
-//
-//            System.out.println("Finally, what is their species?");
-//            String species = input.nextLine();
-//
-//            tank.addFish(new Fish(name, color, species));
-//            System.out.println("Successfully added!");
-//        }
-//    }
-//
-//    // MODIFIES: this
-//    // EFFECTS: removes a fish from the tank
-//    private void doRemoval() {
-//        if (tank.isEmpty()) {
-//            System.out.println("Sorry - the tank is empty! Add some fish first!");
-//        } else {
-//            System.out.println("Please type the name of the fish you would like to remove.");
-//            doStatus();
-//            String fishName = input.nextLine();
-//            if (tank.removeFish(fishName)) {
-//                System.out.println(fishName + " has gone to fish heaven! Goodbye " + fishName + "!");
-//            } else {
-//                System.out.println("That fish could not be found.");
-//            }
-//        }
-//    }
-//
-//    // MODIFIES: this
-//    // EFFECTS: feeds all the fish, if any
-//    private void doFeed() {
-//        if (tank.isEmpty()) {
-//            System.out.println("You sprinkle some flakes into an empty tank. Why?");
-//        } else {
-//            tank.feedAllFish();
-//            System.out.println("Yum!");
-//        }
-//    }
-//
-//    // MODIFIES: this
-//    // EFFECTS: hungers all the fish
-//    private void doHunger() {
-//        if (tank.isEmpty()) {
-//            System.out.println("Empty tanks don't get hungry!");
-//        } else {
-//            tank.hungerAllFish();
-//            System.out.println("Gurgle gurgle...");
-//        }
-//    }
-//
-//    // EFFECTS: prints all the Fish in the tank with their respective attributes
-//    private void doStatus() {
-//        if (tank.isEmpty()) {
-//            System.out.println("There are no fish to view!");
-//        } else {
-//            System.out.println("The following fish are in the tank:");
-//            printSummary();
-//        }
-//    }
-
-
 }

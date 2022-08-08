@@ -21,16 +21,16 @@ ___
 > a basic "sentience" of the fish through some very simple animations and
 > programming to where it feels like the fish has some semblance of reality.
 
-As a **user**, I want to be able to:
+# As a **user**, I want to be able to:
 - Add fish to a Tank with chosen attributes of Name, Colour, Species
 - Remove fish from a Tank
 - Feed the fish to reset their hunger levels
-- Watch the fish swim around (or list all fish in a Tank at first, prior to GUI)
+- Watch the fish swim around
 - Check the hunger levels of the fish
 - Have the tank auto-save when I decide to quit the application
 - When starting the application, have the option to either continue with the previous tank, or start over
 
-If I have the time, I would love to add extra functionalities like:
+# If I have the time, I would love to add extra functionalities like:
 - Being able to "chase" fish with the cursor
 - Providing basic animations for the fish
 - Provide some decorations to drag and drop around the tank
@@ -43,4 +43,10 @@ If I have the time, I would love to add extra functionalities like:
 - Some degree of gamification where upgrades can be purchased, like an automatic feeder
 - Have fish interact with each other i.e. Prey fish gather in schools away from predators
 
-  
+# Instructions for Grader
+
+- You can generate the first required event by clicking "Add Fish", and entering the fish details.
+- You can generate the second required event by clicking "Remove Fish", and entering the name of the fish to remove.
+- You can locate my visual component by looking at the blue Tank area on the left, and adding fish to swim in it.
+- You can save the state of my application by clicking the "Save Fish" button.
+- You can reload the state of my application with the pop-up on startup if there is a previous save file to load from.

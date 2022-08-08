@@ -12,9 +12,11 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 
+// SOURCE: JsonSerializationDemo
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
 // A reader that takes JSON files from the data and loads them as tank states
 public class JsonReader {
-    //SOURCE: JsonDemo
     private String sourceFile;
 
     // EFFECTS: constructs a jsonReader to read from sourceFile
