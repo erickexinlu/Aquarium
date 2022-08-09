@@ -142,11 +142,9 @@ public class Tank implements Writable {
     private JSONArray fishesToJson() {
         // SOURCE: JsonDemo
         JSONArray jsonFishes = new JSONArray();
-
         for (Fish f : tank) {
             jsonFishes.put(f.toJson());
         }
-
         return jsonFishes;
     }
 }

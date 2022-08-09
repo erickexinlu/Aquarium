@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static model.Tank.MAX_FISH;
+import static model.Tank.TICKS_PER_HUNGER;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -38,6 +39,16 @@ public class TankTest {
         tank.hungerAllFish();
         assertEquals(centerFish1.getHunger(), 99);
         assertEquals(centerFish2.getHunger(), 99);
+    }
+
+    @Test
+    public void testUpdateLoop() {
+        tank.addFish(centerFish1);
+        for (int i = 0; i < TICKS_PER_HUNGER; i++) {
+            tank.update();
+        }
+        tank.update();
+        assertEquals(centerFish1.getHunger(), 99);
     }
 
     @Test
