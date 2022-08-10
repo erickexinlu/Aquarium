@@ -72,8 +72,8 @@ public class Fish implements Writable {
     private void initializePos() {
         this.posX = random.nextInt(Tank.TANK_WIDTH);
         this.posY = random.nextInt(Tank.TANK_HEIGHT);
-        this.speedX = random.nextInt(4);
-        this.speedY = random.nextInt(4);
+        this.speedX = random.nextInt(4) + 2;
+        this.speedY = random.nextInt(4) + 2;
     }
 
     // MODIFIES: this

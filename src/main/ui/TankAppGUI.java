@@ -1,6 +1,8 @@
 package ui;
 
 import com.sun.org.apache.xalan.internal.xsltc.runtime.AbstractTranslet;
+import model.Event;
+import model.EventLog;
 import model.Fish;
 import model.Tank;
 import persistence.JsonReader;
@@ -10,10 +12,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 
 // SOURCE: JsonSerializationDemo
@@ -26,6 +28,8 @@ import java.util.Scanner;
 // https://edge.edx.org/assets/courseware/v1/13595daba554c85e2fe669e686cbff91/
 // asset-v1:UBC+CPSC210+all+type@asset+block/SpaceInvadersStarter.zip
 
+// SOURCE: AlarmSystem
+// https://github.students.cs.ubc.ca/CPSC210/AlarmSystem
 
 // This class manages all GUI interactions for the rest of the classes
 public class TankAppGUI extends JFrame {
@@ -100,9 +104,24 @@ public class TankAppGUI extends JFrame {
     private void startFrame() {
         this.setTitle("Your fish tank!");
         this.setSize(WIDTH, HEIGHT);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent evt) {
+                printLog();
+                System.exit(0);
+            }
+        });
+
         this.setLayout(new BorderLayout());
         this.setResizable(false);
+    }
+
+    private void printLog() {
+        for (Event e : EventLog.getInstance()) {
+            System.out.println(e);
+        }
     }
 
     // MODIFIES: this, tankPanel
@@ -272,12 +291,22 @@ public class TankAppGUI extends JFrame {
         }
     }
 
-    // EFFECTS: returns true if there are fish in the save file to load from
+//    // EFFECTS: returns true if there are fish in the save file to load from
+//    public boolean checkAutoLoad() {
+//        try {
+//            jsonFileString = jsonReader.
+//            Tank tempTank = new Tank();
+//            tempTank = jsonReader.read();
+//            return !tempTank.isEmpty();
+//        } catch (IOException e) {
+//            System.out.println("An error occurred while checking auto save file");
+//        }
+//        return false;
+//    }
+
     public boolean checkAutoLoad() {
         try {
-            Tank tempTank = new Tank();
-            tempTank = jsonReader.read();
-            return !tempTank.isEmpty();
+            return !jsonReader.checkEmpty();
         } catch (IOException e) {
             System.out.println("An error occurred while checking auto save file");
         }

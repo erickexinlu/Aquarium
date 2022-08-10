@@ -44,6 +44,9 @@ public class Tank implements Writable {
             return false;
         } else {
             tank.add(fish);
+            EventLog.getInstance().logEvent(
+                    new Event("A fish named " + fish.getName() + " was added to the tank.")
+            );
             return true;
         }
     }
@@ -75,6 +78,9 @@ public class Tank implements Writable {
         for (Fish fish : tank) {
             if (fishName.equalsIgnoreCase(fish.getName())) {
                 tank.remove(fish);
+                EventLog.getInstance().logEvent(
+                        new Event("The fish " + fishName + " was removed from the tank.")
+                );
                 return true;
             }
         }

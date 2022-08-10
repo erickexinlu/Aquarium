@@ -32,6 +32,11 @@ public class JsonReader {
         return parseTank(jsonObject);
     }
 
+    // EFFECTS: checks if the jsonFile is empty for autoloading purposes
+    public boolean checkEmpty() throws IOException {
+        return (readFile(sourceFile).equals("{\"tank\": []}"));
+    }
+
     // EFFECTS: turns sourceFile into string and returns it
     private String readFile(String source) throws IOException {
         StringBuilder converter = new StringBuilder();

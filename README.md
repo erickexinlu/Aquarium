@@ -39,7 +39,7 @@ ___
 - Provide avenues to customize the tank and the background
 - Provide avenues to customize the fish
 - Have fish express their level of "contentment"
-- Have fish die if too unhappy - maybe I don't want this ??? :(
+- Have fish die if too unhappy
 - Some degree of gamification where upgrades can be purchased, like an automatic feeder
 - Have fish interact with each other i.e. Prey fish gather in schools away from predators
 
@@ -50,3 +50,13 @@ ___
 - You can locate my visual component by looking at the blue Tank area on the left, and adding fish to swim in it.
 - You can save the state of my application by clicking the "Save Fish" button.
 - You can reload the state of my application with the pop-up on startup if there is a previous save file to load from.
+
+# Phase 4: Task 2
+Here is an example of an event log you might expect: 
+
+- Tue Aug 09 21:09:39 PDT 2022 
+- A fish named Nemo was added to the tank.
+- Tue Aug 09 21:09:45 PDT 2022
+- A fish named Dory was added to the tank.
+- Tue Aug 09 21:09:49 PDT 2022
+- The fish Nemo was removed from the tank.
