@@ -60,3 +60,9 @@ Here is an example of an event log you might expect:
 - A fish named Dory was added to the tank.
 - Tue Aug 09 21:09:49 PDT 2022
 - The fish Nemo was removed from the tank.
+
+# Phase 4: Task 3
+I gave the hierarchy design a lot of thought in Phase 2, and I don't have too many classes to begin with, so I was
+pretty satisfied with the design. I considered the addition of a MenuPanel class, not unlike the TankPanel class
+that I already have, as I felt like a lot of the button generating and handling was bloating the GUI a little,
+but I personally felt that it was reasonably within the lines of what the TankAppGUI class should be handling anyway.

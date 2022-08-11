@@ -291,19 +291,7 @@ public class TankAppGUI extends JFrame {
         }
     }
 
-//    // EFFECTS: returns true if there are fish in the save file to load from
-//    public boolean checkAutoLoad() {
-//        try {
-//            jsonFileString = jsonReader.
-//            Tank tempTank = new Tank();
-//            tempTank = jsonReader.read();
-//            return !tempTank.isEmpty();
-//        } catch (IOException e) {
-//            System.out.println("An error occurred while checking auto save file");
-//        }
-//        return false;
-//    }
-
+    // EFFECTS: returns true if there are fish in the save file to load from
     public boolean checkAutoLoad() {
         try {
             return !jsonReader.checkEmpty();
