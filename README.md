@@ -1,9 +1,6 @@
 # Interactive Aquarium
 **A place where fish can be themselves!**
 
-## User Stories
-___
-
 ### What will the application do?
 
 > The application will animate happy fish in the background against 
@@ -16,10 +13,10 @@ ___
 
 ### Why is the project of interest to you?
 
-> Companionship and company is very valuable to me, and fish
-> have been with me since I was a child. I love the idea of simulating 
+> I love fish, especially for the idea that they have their own world in which
+> you can kind of let them be and do their own thing. I love the idea of simulating 
 > a basic "sentience" of the fish through some very simple animations and
-> programming to where it feels like the fish has some semblance of reality.
+> programming to where it feels like the fish has some kind of personality.
 
 # As a **user**, I want to be able to:
 - Add fish to a Tank with chosen attributes of Name, Colour, Species
