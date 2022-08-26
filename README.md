@@ -1,4 +1,4 @@
-# Interactive Aquarium
+# Interactive Aquarium (WIP)
 **A place where fish can be themselves!**
 
 ### What will the application do?
